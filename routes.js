@@ -3,10 +3,10 @@
 const express = require("express");
 const cartitems = express.Router();
 const cartList = [
-  {id:0,product:"hat",price:4,quantity:1},
-  {id:1,product:"bat",price:5,quantity:1},
-  {id:2,product:"cat",price:10,quantity:1},
-  {id:3,product:"rat",price:2,quantity:1}
+  {product:"hat",price:4,quantity:1,id:0},
+  {product:"bat",price:5,quantity:1,id:1},
+  {product:"cat",price:10,quantity:1,id:2},
+  {product:"rat",price:2,quantity:1,id:3}
 ]
 
 cartitems.get("/cartitems", (req, res) => {
@@ -15,6 +15,7 @@ cartitems.get("/cartitems", (req, res) => {
 cartitems.post("/cartitems", (req, res) => {
   cartList.push(req.body);
   res.send(cartList);
+  console.log(cartList)
 });
 cartitems.put("/cartitems/:id", (req, res) =>  {
   for(let i = 0; i < cartList.length; i++) {

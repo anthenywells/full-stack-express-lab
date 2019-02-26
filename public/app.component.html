@@ -1,0 +1,24 @@
+<p class="title">Cart Items</p>
+<button ng-click="showDiv=true;" class="addButton" >Add Item</button>
+
+<div ng-repeat="item in $ctrl.cartList" class="item" >
+  <p>
+    <span>ID:</span> {{item.id}}
+    <span>Product:</span> {{item.product}} 
+    <span>Price:</span> {{item.price | currency}}  
+    <span>Quantity:</span> {{item.quantity}}
+    <button ng-click="$ctrl.editItem(item, newItem)">
+      <i class="fas fa-edit"></i>
+    </button>
+    <button ng-click="$ctrl.deleteItem(item)">
+      <i class="fas fa-trash-alt"></i>
+    </button>
+    </p>
+</div>
+
+<form ng-submit="$ctrl.addItem(newItem);" ng-hide="!showDiv" class="newItem">
+  <input type="text" ng-model="newItem.product" ng-required="true" placeholder="Product">
+  <input type="number" ng-model="newItem.price" ng-required="true" placeholder="Price">
+  <input type="number" ng-model="newItem.quantity" ng-required="true" placeholder="Quantity">
+  <button ng-click="showDiv=false;">Add Item</button>
+</form> 
