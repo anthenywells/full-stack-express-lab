@@ -31,13 +31,13 @@ const cartItems = {
     function handleResponse(response) {
       vm.cartList = response.data;}
     CartService.getAllItems().then(handleResponse);
-    vm.addItem = function(newItem) {
+    vm.addItem = (newItem) => {
       CartService.addItem(newItem).then(handleResponse);
     }
-    vm.editItem = function(item, newItem) {
+    vm.editItem = (item, newItem) => {
       CartService.editItem(item, newItem).then(handleResponse);
     }
-    vm.deleteItem = function(item) {
+    vm.deleteItem = (item) => {
       CartService.deleteItem(item).then(handleResponse);
     }
   }]

@@ -9,14 +9,14 @@ const cartList = [
   {id:3,product:"rat",price:2,quantity:1}
 ]
 
-cartitems.get("/cartitems", function(req, res){
+cartitems.get("/cartitems", (req, res) => {
   res.send(cartList);
 });
-cartitems.post("/cartitems", function(req, res){
+cartitems.post("/cartitems", (req, res) => {
   cartList.push(req.body);
   res.send(cartList);
 });
-cartitems.put("/cartitems/:id", function(req, res) {
+cartitems.put("/cartitems/:id", (req, res) =>  {
   for(let i = 0; i < cartList.length; i++) {
     if(cartList[i].id == req.params.id) {
       cartList.splice(i, 1, req.body);
@@ -25,7 +25,7 @@ cartitems.put("/cartitems/:id", function(req, res) {
     }
   }
 });
-cartitems.delete("/cartitems/:id", function(req, res){
+cartitems.delete("/cartitems/:id", (req, res) => {
   for(let i = 0; i < cartList.length; i++) {
     if(cartList[i].id == req.params.id) {
       cartList.splice(i, 1);
