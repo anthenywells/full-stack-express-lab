@@ -13,12 +13,12 @@ cartitems.get("/cartitems", (req, res) => {
   selectAll(req,res);
 });
 cartitems.post("/cartitems", (req, res) => {
-  pool.query("insert into shoppingcart (product, price, quantity) values ($1::text, $2::real, $3::int)", [req.body.product, req.body.price, req.body.quantity]).then(function(){
+  pool.query("insert into shoppingcart (product, price, qty) values ($1::text, $2::real, $3::int)", [req.body.product, req.body.price, req.body.qty]).then(function(){
     selectAll(req,res);
   });
 });
 cartitems.put("/cartitems/:id", (req, res) =>  {
-  pool.query("update shoppingcart set quantity=$1::int where id=$2::int", [req.body.quantity, req.params.id]).then(function(){
+  pool.query("update shoppingcart set qty=$1::int where id=$2::int", [req.body.qty, req.params.id]).then(function(){
     selectAll(req,res);
   });
 });

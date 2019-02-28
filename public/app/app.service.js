@@ -12,14 +12,14 @@ function CartService($http) {
     return $http({
       method: "POST",
       url: "/cartitems",
-      data: newItem 
+      data: { ...newItem, price: Number(newItem.price), quantity: Number(newItem.qty)}
     })
   }
-  self.editItem = (item, newItem) => {
+  self.editQty = (item) => {
     return $http({
       method: "PUT",
       url: `/cartitems/${item.id}`,
-      data: newItem
+      data: item
     })
   }
   self.deleteItem = (item) => {
