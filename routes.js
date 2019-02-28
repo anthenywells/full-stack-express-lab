@@ -2,37 +2,29 @@
 
 const express = require("express");
 const cartitems = express.Router();
-const cartList = [
-  {product:"hat",price:4,quantity:1,id:0},
-  {product:"bat",price:5,quantity:1,id:1},
-  {product:"cat",price:10,quantity:1,id:2},
-  {product:"rat",price:2,quantity:1,id:3}
-]
+const pool = require("./pg-connection-pool")
 
+function selectAll(req,res) {
+  pool.query("select * from shoppingcart order by id asc").then((result) => {
+      res.send(result.rows)
+  })
+};
 cartitems.get("/cartitems", (req, res) => {
-  res.send(cartList);
+  selectAll(req,res);
 });
 cartitems.post("/cartitems", (req, res) => {
-  cartList.push(req.body);
-  res.send(cartList);
-  console.log(cartList)
+  pool.query("insert into shoppingcart (product, price, quantity) values ($1::text, $2::real, $3::int)", [req.body.product, req.body.price, req.body.quantity]).then(function(){
+    selectAll(req,res);
+  });
 });
 cartitems.put("/cartitems/:id", (req, res) =>  {
-  for(let i = 0; i < cartList.length; i++) {
-    if(cartList[i].id == req.params.id) {
-      cartList.splice(i, 1, req.body);
-      res.send(cartList);
-      break;
-    }
-  }
+  pool.query("update shoppingcart set quantity=$1::int where id=$2::int", [req.body.quantity, req.params.id]).then(function(){
+    selectAll(req,res);
+  });
 });
 cartitems.delete("/cartitems/:id", (req, res) => {
-  for(let i = 0; i < cartList.length; i++) {
-    if(cartList[i].id == req.params.id) {
-      cartList.splice(i, 1);
-      res.send(cartList);
-      break;
-    }
-  }
+  pool.query("delete from shoppingcart where id=$1::int", [req.params.id]).then(function(){
+    selectAll(req,res);
+  });
 });
 module.exports = cartitems;
